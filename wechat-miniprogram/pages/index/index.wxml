@@ -1,0 +1,111 @@
+<view class="page">
+  <block wx:if="{{screen == 'home'}}">
+    <view class="home-screen">
+      <view class="brand">
+        <view class="brand-title">妈妈连连看</view>
+        <view class="brand-subtitle">轻轻一点，慢慢玩。</view>
+      </view>
+
+      <view class="home-actions">
+        <button class="big-button primary-button" bindtap="startGame">开始游戏</button>
+        <button class="big-button secondary-button" bindtap="showDifficulty">选择难度</button>
+        <button class="big-button secondary-button" bindtap="showRules">玩法说明</button>
+      </view>
+    </view>
+  </block>
+
+  <block wx:elif="{{screen == 'difficulty'}}">
+    <view class="plain-screen">
+      <view class="screen-title">选择难度</view>
+      <view class="difficulty-list">
+        <button
+          wx:for="{{difficultyOptions}}"
+          wx:key="key"
+          class="difficulty-button {{item.selected ? 'difficulty-button-active' : ''}}"
+          data-difficulty="{{item.key}}"
+          bindtap="chooseDifficulty"
+        >
+          <text class="difficulty-name">{{item.label}}</text>
+          <text class="difficulty-size">{{item.sizeText}}</text>
+        </button>
+      </view>
+      <button class="big-button light-button" bindtap="goHome">回首页</button>
+    </view>
+  </block>
+
+  <block wx:elif="{{screen == 'rules'}}">
+    <view class="plain-screen">
+      <view class="screen-title">玩法说明</view>
+      <view class="rules-text">
+        <view>点两个一样的图案。</view>
+        <view>如果中间能连起来，就会消除。</view>
+        <view>连线最多拐两次，可以从外边绕过去。</view>
+        <view>没有倒计时，点错也没关系。</view>
+      </view>
+      <button class="big-button primary-button" bindtap="goHome">我知道了</button>
+    </view>
+  </block>
+
+  <block wx:elif="{{screen == 'game'}}">
+    <view class="game-screen">
+      <view class="game-status">
+        <view class="status-box">
+          <text class="status-label">难度</text>
+          <text class="status-value">{{difficultyLabel}}</text>
+        </view>
+        <view class="status-box">
+          <text class="status-label">已用时间</text>
+          <text class="status-value">{{elapsedText}}</text>
+        </view>
+        <view class="status-box">
+          <text class="status-label">剩余</text>
+          <text class="status-value">{{remainingText}}</text>
+        </view>
+      </view>
+
+      <view class="game-actions">
+        <button class="tool-button hint-button" bindtap="onHintTap">提示一下</button>
+        <button class="tool-button restart-button" bindtap="onRestartTap">重新开始</button>
+        <button class="tool-button home-button" bindtap="goHome">回首页</button>
+      </view>
+
+      <view class="message-bar">{{message}}</view>
+
+      <scroll-view class="board-scroll" scroll-x="true" scroll-y="true">
+        <view class="board" style="width: {{boardWidth}}px; height: {{boardHeight}}px;">
+          <view
+            wx:for="{{pathSegments}}"
+            wx:key="id"
+            class="path-line"
+            style="{{item.style}}"
+          ></view>
+
+          <button
+            wx:for="{{tiles}}"
+            wx:key="id"
+            class="tile tone-{{item.iconTone}} {{item.removed ? 'tile-removed' : ''}} {{item.isSelected ? 'tile-selected' : ''}} {{item.isHint ? 'tile-hint' : ''}}"
+            style="{{item.style}}"
+            disabled="{{item.removed}}"
+            data-row="{{item.row}}"
+            data-col="{{item.col}}"
+            bindtap="onTileTap"
+            aria-label="{{item.iconLabel}}"
+            hover-class="tile-hover"
+          >
+            <text class="tile-icon">{{item.iconText}}</text>
+          </button>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+
+  <block wx:elif="{{screen == 'win'}}">
+    <view class="win-screen">
+      <view class="win-title">太棒了！</view>
+      <view class="win-subtitle">全部都消除了</view>
+      <view class="win-time">已用时间 {{winTimeText}}</view>
+      <button class="big-button primary-button" bindtap="onPlayAgainTap">再来一局</button>
+      <button class="big-button light-button" bindtap="goHome">回首页</button>
+    </view>
+  </block>
+</view>

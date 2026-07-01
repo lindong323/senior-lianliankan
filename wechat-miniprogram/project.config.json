@@ -1,0 +1,37 @@
+{
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "description": "微信小程序版妈妈连连看",
+  "miniprogramRoot": "./",
+  "projectname": "妈妈连连看",
+  "setting": {
+    "es6": true,
+    "minified": false,
+    "postcss": true,
+    "urlCheck": false
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "node_modules"
+      },
+      {
+        "type": "folder",
+        "value": "dist"
+      },
+      {
+        "type": "folder",
+        "value": "src"
+      },
+      {
+        "type": "folder",
+        "value": "src-tauri"
+      },
+      {
+        "type": "folder",
+        "value": ".git"
+      }
+    ]
+  }
+}
