@@ -1,0 +1,365 @@
+:root {
+  color: #162033;
+  background: #f4f7fb;
+  font-family:
+    "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)),
+    #e7eef8;
+}
+
+.game-shell {
+  width: min(100%, 1240px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar {
+  width: 100%;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 7px;
+  border: 2px solid #c7d2e5;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(22, 32, 51, 0.08);
+}
+
+.toolbar__brand {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.toolbar__title {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.difficulty-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(78px, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 2px solid #d8e0ee;
+  border-radius: 8px;
+  background: #edf3fb;
+}
+
+.difficulty-tab,
+.action-button {
+  min-height: 44px;
+  border: 2px solid #8ea3bf;
+  border-radius: 8px;
+  color: #162033;
+  background: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.difficulty-tab {
+  min-width: 78px;
+  padding: 0 12px;
+}
+
+.difficulty-tab--active {
+  color: #ffffff;
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+}
+
+.toolbar__stats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 0 4px;
+  font-size: 21px;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.toolbar__stats span {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  padding: 0 10px;
+  border: 2px solid #d6deea;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.toolbar__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.action-button {
+  min-width: 104px;
+  padding: 0 12px;
+}
+
+.action-button--primary {
+  color: #ffffff;
+  border-color: #15803d;
+  background: #15803d;
+}
+
+.action-button--warning {
+  color: #ffffff;
+  border-color: #b45309;
+  background: #b45309;
+}
+
+.action-button:disabled {
+  color: #6b7280;
+  border-color: #cbd5e1;
+  background: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.difficulty-tab:focus-visible,
+.action-button:focus-visible,
+.tile:focus-visible {
+  outline: 5px solid #facc15;
+  outline-offset: 2px;
+}
+
+.message-bar {
+  width: min(100%, 980px);
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 14px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #162033;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.message-bar--attention {
+  border-color: #b45309;
+  background: #fff7ed;
+  color: #7c2d12;
+}
+
+.board-scroll {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  padding: 38px;
+  margin: -38px;
+}
+
+.board-frame {
+  position: relative;
+  width: calc(var(--cols) * var(--tile-size));
+  height: calc(var(--rows) * var(--tile-size));
+  flex: 0 0 auto;
+}
+
+.board-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  grid-template-rows: repeat(var(--rows), var(--tile-size));
+  gap: 0;
+  width: calc(var(--cols) * var(--tile-size));
+  height: calc(var(--rows) * var(--tile-size));
+  border: 3px solid #475569;
+  border-radius: 8px;
+  background: #dbe6f3;
+  overflow: hidden;
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: 2px solid #94a3b8;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: inset 0 -3px 0 rgba(71, 85, 105, 0.12);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tile:hover:not(:disabled) {
+  background: #eef6ff;
+}
+
+.tile--selected {
+  position: relative;
+  z-index: 4;
+  border-color: #dc2626;
+  background: #fff1f2;
+  box-shadow:
+    inset 0 0 0 4px #dc2626,
+    0 0 0 4px #fecaca;
+}
+
+.tile--hinted {
+  position: relative;
+  z-index: 4;
+  border-color: #f59e0b;
+  background: #fffbeb;
+  box-shadow:
+    inset 0 0 0 4px #f59e0b,
+    0 0 0 4px #fde68a;
+}
+
+.tile--removed {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tile__icon {
+  width: 58px;
+  height: 58px;
+  display: block;
+}
+
+.path-layer {
+  position: absolute;
+  z-index: 5;
+  top: calc(var(--tile-size) / -2);
+  left: calc(var(--tile-size) / -2);
+  width: calc(100% + var(--tile-size));
+  height: calc(100% + var(--tile-size));
+  overflow: visible;
+  pointer-events: none;
+}
+
+.path-layer__halo,
+.path-layer__line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.path-layer__halo {
+  stroke: #ffffff;
+  stroke-width: 12;
+}
+
+.path-layer__line {
+  stroke: #dc2626;
+  stroke-width: 7;
+}
+
+@media (max-width: 1180px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-height: 780px) {
+  .app-shell {
+    align-items: flex-start;
+    padding: 4px;
+  }
+
+  .game-shell {
+    gap: 5px;
+  }
+
+  .toolbar {
+    min-height: 52px;
+    padding: 5px;
+  }
+
+  .toolbar__title {
+    font-size: 24px;
+  }
+
+  .difficulty-tab,
+  .action-button {
+    min-height: 40px;
+    font-size: 18px;
+  }
+
+  .toolbar__stats {
+    font-size: 19px;
+  }
+
+  .toolbar__stats span {
+    min-height: 38px;
+  }
+
+  .message-bar {
+    min-height: 26px;
+    font-size: 19px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+}
+
+@media (max-width: 760px) {
+  .toolbar__actions,
+  .toolbar__stats {
+    flex-wrap: wrap;
+  }
+
+  .toolbar__title {
+    font-size: 24px;
+  }
+
+  .message-bar {
+    font-size: 19px;
+  }
+}
